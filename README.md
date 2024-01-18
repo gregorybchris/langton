@@ -2,6 +2,8 @@
 
 Simulation of [Langton's ant](https://en.wikipedia.org/wiki/Langton%27s_ant).
 
+Python scripts that generate an mp4 file of Langton's ant.
+
 <div align="center">
   <img src="assets/langton.gif" width=500>
 </div>
@@ -12,7 +14,7 @@ Requirements:
 
 - [Poetry](https://python-poetry.org/)
 
-Install the backend package
+Installation:
 
 ```bash
 poetry install
