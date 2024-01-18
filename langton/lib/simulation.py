@@ -20,15 +20,13 @@ class Simulation:
         dx = 1
         dy = 0
         for _ in range(self.iterations):
-            for rule in policy.rules:
-                current_color = self.grid.get(x, y)
-                if current_color == rule.current_color:
-                    self.graphics.draw(x, y, color=current_color)
-                    self.grid.set(x, y, color=rule.new_color)
-                    dx, dy = self.make_turn(dx, dy, rule.turn)
-                    x += dx
-                    y += dy
-                    break
+            current_color = self.grid.get(x, y)
+            update = policy.get_update(current_color)
+            self.graphics.draw(x, y, color=current_color)
+            self.grid.set(x, y, color=update.color)
+            dx, dy = self.make_turn(dx, dy, update.turn)
+            x += dx
+            y += dy
 
     def make_turn(self, dx: int, dy: int, turn: Turn) -> Tuple[int, int]:
         if turn == Turn.RIGHT:

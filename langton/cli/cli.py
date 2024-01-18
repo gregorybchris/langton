@@ -6,7 +6,6 @@ import click
 from langton.lib.color import Color
 from langton.lib.graphics import Graphics
 from langton.lib.policy import Policy
-from langton.lib.rule import Rule
 from langton.lib.simulation import Simulation
 from langton.lib.turn import Turn
 
@@ -43,19 +42,20 @@ def run(
     set_logging_config(debug)
 
     with Graphics.context(filepath=filepath, width=width, height=height, fps=fps) as graphics:
-        rules = [
-            Rule(current_color=Color.BLACK, turn=Turn.LEFT, new_color=Color.RED),
-            Rule(current_color=Color.RED, turn=Turn.LEFT, new_color=Color.BLUE),
-            Rule(current_color=Color.BLUE, turn=Turn.LEFT, new_color=Color.YELLOW),
-            Rule(current_color=Color.YELLOW, turn=Turn.RIGHT, new_color=Color.GREEN),
-            Rule(current_color=Color.GREEN, turn=Turn.LEFT, new_color=Color.YELLOW),
-            Rule(current_color=Color.YELLOW, turn=Turn.RIGHT, new_color=Color.VIOLET),
-            Rule(current_color=Color.VIOLET, turn=Turn.RIGHT, new_color=Color.TEAL),
-            Rule(current_color=Color.TEAL, turn=Turn.LEFT, new_color=Color.ORANGE),
-            Rule(current_color=Color.ORANGE, turn=Turn.RIGHT, new_color=Color.WHITE),
-            Rule(current_color=Color.WHITE, turn=Turn.LEFT, new_color=Color.BLACK),
-        ]
-        policy = Policy(rules=rules)
+        policy = Policy.new(
+            [
+                (Color.BLACK, Turn.LEFT),
+                (Color.RED, Turn.RIGHT),
+                (Color.BLUE, Turn.LEFT),
+                (Color.YELLOW, Turn.RIGHT),
+                (Color.GREEN, Turn.LEFT),
+                (Color.YELLOW, Turn.RIGHT),
+                (Color.VIOLET, Turn.RIGHT),
+                (Color.TEAL, Turn.LEFT),
+                (Color.ORANGE, Turn.LEFT),
+                (Color.WHITE, Turn.RIGHT),
+            ]
+        )
 
         with Simulation.context(
             graphics=graphics,

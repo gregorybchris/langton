@@ -5,7 +5,6 @@ from langton.lib.turn import Turn
 
 
 @dataclass
-class Rule:
-    current_color: Color
+class Update:
     turn: Turn
-    new_color: Color
+    color: Color
