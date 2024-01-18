@@ -25,7 +25,7 @@ def main() -> None:
 @main.command()
 @click.argument("filepath", type=Path)
 @click.option("--iter", "iterations", type=int, default=1000)
-@click.option("--fps", type=float, default=40.0)
+@click.option("--fps", type=float, default=500.0)
 @click.option("--width", type=int, default=100)
 @click.option("--height", type=int, default=100)
 @click.option("--debug", type=bool, is_flag=True)

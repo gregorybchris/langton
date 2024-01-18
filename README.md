@@ -16,5 +16,5 @@ Install the backend package
 
 ```bash
 poetry install
-langton run
+langton run output.mp4
 ```
