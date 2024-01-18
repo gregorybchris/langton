@@ -25,7 +25,7 @@ def main() -> None:
 
 
 @main.command()
-@click.option("--iterations", type=int, default=1000)
+@click.option("--iter", "iterations", type=int, default=1000)
 @click.option("--debug", type=bool, is_flag=True)
 def run(
     iterations: int,
@@ -33,8 +33,9 @@ def run(
 ) -> None:
     set_logging_config(debug)
 
-    width = 80
-    height = 80
+    width = 140
+    height = 140
+
     with Graphics.context(width=width, height=height) as graphics:
         rules = [
             Rule(current_color=Color.BLACK, turn=True, new_color=Color.WHITE),
@@ -51,7 +52,7 @@ def run(
             print(f"Running simulation for {iterations} iterations")
             simulation.run(policy)
 
-        filepath = Path("outputs/video.gif")
+        filepath = Path("outputs/ant.gif")
         print("Saving video...")
         graphics.save_video(filepath)
         print(f"Saved GIF to {filepath}")
