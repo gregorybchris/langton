@@ -3,11 +3,9 @@ from pathlib import Path
 
 import click
 
-from langton.lib.color import Color
 from langton.lib.graphics import Graphics
 from langton.lib.policy import Policy
 from langton.lib.simulation import Simulation
-from langton.lib.turn import Turn
 
 logger = logging.getLogger(__name__)
 
@@ -42,21 +40,7 @@ def run(
     set_logging_config(debug)
 
     with Graphics.context(filepath=filepath, width=width, height=height, fps=fps) as graphics:
-        policy = Policy.new(
-            [
-                (Color.BLACK, Turn.LEFT),
-                (Color.RED, Turn.RIGHT),
-                (Color.BLUE, Turn.LEFT),
-                (Color.GREEN, Turn.RIGHT),
-                (Color.YELLOW, Turn.LEFT),
-                (Color.VIOLET, Turn.RIGHT),
-                (Color.TEAL, Turn.LEFT),
-                (Color.ORANGE, Turn.LEFT),
-                (Color.WHITE, Turn.LEFT),
-                (Color.NAVY, Turn.RIGHT),
-                (Color.PINK, Turn.LEFT),
-            ]
-        )
+        policy = Policy.from_str("L R L L R L L L R R R L R L")
 
         with Simulation.context(
             graphics=graphics,
