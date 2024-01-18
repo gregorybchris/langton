@@ -5,6 +5,7 @@ from typing import Iterator, Self, Tuple
 from langton.lib.graphics import Graphics
 from langton.lib.grid import Grid
 from langton.lib.policy import Policy
+from langton.lib.turn import Turn
 
 
 @dataclass
@@ -29,8 +30,8 @@ class Simulation:
                     y += dy
                     break
 
-    def make_turn(self, dx: int, dy: int, turn: bool) -> Tuple[int, int]:
-        if turn:
+    def make_turn(self, dx: int, dy: int, turn: Turn) -> Tuple[int, int]:
+        if turn == Turn.RIGHT:
             return dy, -dx
         return -dy, dx
 

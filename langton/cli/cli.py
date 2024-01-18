@@ -8,6 +8,7 @@ from langton.lib.graphics import Graphics
 from langton.lib.policy import Policy
 from langton.lib.rule import Rule
 from langton.lib.simulation import Simulation
+from langton.lib.turn import Turn
 
 logger = logging.getLogger(__name__)
 
@@ -43,16 +44,16 @@ def run(
 
     with Graphics.context(filepath=filepath, width=width, height=height, fps=fps) as graphics:
         rules = [
-            Rule(current_color=Color.BLACK, turn=False, new_color=Color.RED),
-            Rule(current_color=Color.RED, turn=False, new_color=Color.BLUE),
-            Rule(current_color=Color.BLUE, turn=False, new_color=Color.YELLOW),
-            Rule(current_color=Color.YELLOW, turn=True, new_color=Color.GREEN),
-            Rule(current_color=Color.GREEN, turn=False, new_color=Color.YELLOW),
-            Rule(current_color=Color.YELLOW, turn=True, new_color=Color.VIOLET),
-            Rule(current_color=Color.VIOLET, turn=True, new_color=Color.TEAL),
-            Rule(current_color=Color.TEAL, turn=False, new_color=Color.ORANGE),
-            Rule(current_color=Color.ORANGE, turn=True, new_color=Color.WHITE),
-            Rule(current_color=Color.WHITE, turn=False, new_color=Color.BLACK),
+            Rule(current_color=Color.BLACK, turn=Turn.LEFT, new_color=Color.RED),
+            Rule(current_color=Color.RED, turn=Turn.LEFT, new_color=Color.BLUE),
+            Rule(current_color=Color.BLUE, turn=Turn.LEFT, new_color=Color.YELLOW),
+            Rule(current_color=Color.YELLOW, turn=Turn.RIGHT, new_color=Color.GREEN),
+            Rule(current_color=Color.GREEN, turn=Turn.LEFT, new_color=Color.YELLOW),
+            Rule(current_color=Color.YELLOW, turn=Turn.RIGHT, new_color=Color.VIOLET),
+            Rule(current_color=Color.VIOLET, turn=Turn.RIGHT, new_color=Color.TEAL),
+            Rule(current_color=Color.TEAL, turn=Turn.LEFT, new_color=Color.ORANGE),
+            Rule(current_color=Color.ORANGE, turn=Turn.RIGHT, new_color=Color.WHITE),
+            Rule(current_color=Color.WHITE, turn=Turn.LEFT, new_color=Color.BLACK),
         ]
         policy = Policy(rules=rules)
 
