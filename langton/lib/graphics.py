@@ -20,10 +20,9 @@ class Graphics:
     shape: Tuple[int, int]
     buffer: np.ndarray
     video_writer: VideoWriter
-    square_size: int = DEFAULT_SQUARE_SIZE
-    fps: float = DEFAULT_FPS
+    square_size: int
 
-    def draw(self, x: int, y: int, color: Color) -> None:
+    def draw(self, x: int, y: int, color: Color, write_frame: bool = True) -> None:
         logger.debug(f"Drawing square at ({x}, {y}) with color {color}")
 
         if x < 0 or x >= self.shape[0]:
@@ -39,7 +38,8 @@ class Graphics:
                 cy = y * self.square_size + c
                 self.buffer[rx, cy] = color.to_rgb()
 
-        self.video_writer.write(self.buffer)
+        if write_frame:
+            self.video_writer.write(self.buffer)
 
     @classmethod
     @contextmanager
@@ -67,6 +67,5 @@ class Graphics:
             buffer=buffer,
             video_writer=video_writer,
             square_size=square_size,
-            fps=fps,
         )
         video_writer.release()
