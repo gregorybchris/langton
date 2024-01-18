@@ -28,7 +28,6 @@ class Simulation:
                     x += dx
                     y += dy
                     break
-            self.graphics.save_frame()
 
     def make_turn(self, dx: int, dy: int, turn: bool) -> Tuple[int, int]:
         if turn:

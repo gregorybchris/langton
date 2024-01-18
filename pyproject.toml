@@ -22,7 +22,7 @@ include = "langton"
 click = "^8.1.7"
 python = ">=3.10"
 numpy = "^1.26.3"
-pillow = "^10.2.0"
+opencv-python = "^4.9.0.80"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.12.1"
@@ -58,6 +58,9 @@ notes = ["FIXME"]
 [tool.pylint.format]
 max-line-length = 120
 
+[tool.pylint.master]
+extension-pkg-allow-list = ["cv2"]
+
 [tool.pylint.messages_control]
 disable = [
     "missing-function-docstring",
@@ -68,3 +71,6 @@ disable = [
 
 [tool.pylint.reports]
 output-format = "colorized"
+
+[tool.pylint.typecheck]
+generated-members = ["cv2"]

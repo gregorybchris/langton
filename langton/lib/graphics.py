@@ -1,13 +1,13 @@
 import logging
 from contextlib import contextmanager
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterator, List, Self, Tuple
+from typing import Iterator, Self, Tuple
 
 import numpy as np
-from PIL import Image
 
 from langton.lib.color import Color
+from langton.lib.cv import VideoWriter, codec_from_code
 
 logger = logging.getLogger(__name__)
 
@@ -15,11 +15,13 @@ logger = logging.getLogger(__name__)
 @dataclass
 class Graphics:
     DEFAULT_SQUARE_SIZE = 10
+    DEFAULT_FPS = 20.0
 
     shape: Tuple[int, int]
     buffer: np.ndarray
-    images: List[Image.Image] = field(default_factory=list)
+    video_writer: VideoWriter
     square_size: int = DEFAULT_SQUARE_SIZE
+    fps: float = DEFAULT_FPS
 
     def draw(self, x: int, y: int, color: Color) -> None:
         logger.debug(f"Drawing square at ({x}, {y}) with color {color}")
@@ -37,19 +39,34 @@ class Graphics:
                 cy = y * self.square_size + c
                 self.buffer[rx, cy] = color.to_rgb()
 
-    def save_frame(self) -> None:
-        logger.debug("Saving image")
-        image = Image.fromarray(self.buffer.astype(np.uint8), mode="RGB")
-        self.images.append(image)
-
-    def save_video(self, filepath: Path) -> None:
-        logger.debug("Saving video")
-        image = Image.new("RGB", self.buffer.shape[:2])
-        image.save(filepath, save_all=True, append_images=self.images)
+        self.video_writer.write(self.buffer)
 
     @classmethod
     @contextmanager
-    def context(cls, *, width: int, height: int, square_size: int = DEFAULT_SQUARE_SIZE) -> Iterator[Self]:
+    def context(
+        cls,
+        *,
+        filepath: Path,
+        width: int,
+        height: int,
+        square_size: int = DEFAULT_SQUARE_SIZE,
+        fps: float = DEFAULT_FPS,
+    ) -> Iterator[Self]:
         shape = width, height
+
         buffer = np.zeros((width * square_size, height * square_size, 3), dtype=np.uint8)
-        yield cls(shape=shape, buffer=buffer, square_size=square_size)
+        video_writer = VideoWriter(
+            str(filepath),
+            codec_from_code("mp4v"),
+            fps,
+            (buffer.shape[1], buffer.shape[0]),
+            True,
+        )
+        yield cls(
+            shape=shape,
+            buffer=buffer,
+            video_writer=video_writer,
+            square_size=square_size,
+            fps=fps,
+        )
+        video_writer.release()

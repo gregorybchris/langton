@@ -25,10 +25,14 @@ def main() -> None:
 
 
 @main.command()
+@click.argument("filepath", type=Path)
 @click.option("--iter", "iterations", type=int, default=1000)
+@click.option("--fps", type=float, default=40.0)
 @click.option("--debug", type=bool, is_flag=True)
 def run(
+    filepath: Path,
     iterations: int,
+    fps: float,
     debug: bool = False,
 ) -> None:
     set_logging_config(debug)
@@ -36,7 +40,7 @@ def run(
     width = 140
     height = 140
 
-    with Graphics.context(width=width, height=height) as graphics:
+    with Graphics.context(filepath=filepath, width=width, height=height, fps=fps) as graphics:
         rules = [
             Rule(current_color=Color.BLACK, turn=True, new_color=Color.WHITE),
             Rule(current_color=Color.WHITE, turn=False, new_color=Color.BLACK),
@@ -52,7 +56,4 @@ def run(
             print(f"Running simulation for {iterations} iterations")
             simulation.run(policy)
 
-        filepath = Path("outputs/ant.gif")
-        print("Saving video...")
-        graphics.save_video(filepath)
-        print(f"Saved GIF to {filepath}")
+        print(f"Saved to {filepath}")
