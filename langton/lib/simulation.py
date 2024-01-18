@@ -2,6 +2,8 @@ from contextlib import contextmanager
 from dataclasses import dataclass
 from typing import Iterator, Self, Tuple
 
+from tqdm import tqdm
+
 from langton.lib.graphics import Graphics
 from langton.lib.grid import Grid
 from langton.lib.policy import Policy
@@ -19,7 +21,7 @@ class Simulation:
         y = self.grid.shape[1] // 2
         dx = 1
         dy = 0
-        for _ in range(self.iterations):
+        for _ in tqdm(range(self.iterations)):
             current_color = self.grid.get(x, y)
             update = policy.get_update(current_color)
             self.graphics.draw(x, y, color=current_color)

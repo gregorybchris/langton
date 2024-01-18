@@ -47,13 +47,14 @@ def run(
                 (Color.BLACK, Turn.LEFT),
                 (Color.RED, Turn.RIGHT),
                 (Color.BLUE, Turn.LEFT),
-                (Color.YELLOW, Turn.RIGHT),
-                (Color.GREEN, Turn.LEFT),
-                (Color.YELLOW, Turn.RIGHT),
+                (Color.GREEN, Turn.RIGHT),
+                (Color.YELLOW, Turn.LEFT),
                 (Color.VIOLET, Turn.RIGHT),
                 (Color.TEAL, Turn.LEFT),
                 (Color.ORANGE, Turn.LEFT),
-                (Color.WHITE, Turn.RIGHT),
+                (Color.WHITE, Turn.LEFT),
+                (Color.NAVY, Turn.RIGHT),
+                (Color.PINK, Turn.LEFT),
             ]
         )
 
