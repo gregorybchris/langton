@@ -40,7 +40,7 @@ def run(
     set_logging_config(debug)
 
     with Graphics.context(filepath=filepath, width=width, height=height, fps=fps) as graphics:
-        policy = Policy.from_str("L R L L R L L L R R R L R L")
+        policy = Policy.from_str("R L L L L R R R L L L")
 
         with Simulation.context(
             graphics=graphics,

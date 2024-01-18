@@ -6,6 +6,7 @@ from langton.lib.turn import Turn
 from langton.lib.update import Update
 
 COLOR_ORDER = [
+    Color.BLACK,
     Color.RED,
     Color.SALMON,
     Color.LIME,
@@ -18,7 +19,6 @@ COLOR_ORDER = [
     Color.NAVY,
     Color.PINK,
     Color.GREY,
-    Color.BLACK,
     Color.WHITE,
     Color.PEACH,
 ]
